@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task X</title>
+  <script src="https://kit.fontawesome.com/352da9468d.js" crossorigin="anonymous"></script>
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body{
+      background-color: #161B22;
+    }
+    .navbar{
+      display: flex;
+      padding: 15px 0px;
+      color: rgb(255, 196, 0);
+      justify-content: space-between;
+    }
+    .logo{
+      padding: 10px;
+      font-weight: 900;
+    }
+    #bars{
+      margin-right: 15px;
+      margin-top: 15px;
+      font-size: 24px;
+    }
+    .navbar ul{
+      display: flex;
+      list-style: none;
+    }
+    .navbar ul li{
+      margin: 1.5rem
+    }
+
+    .main-content{
+      color: rgb(194, 193, 193);
+      padding: 10px;
+    }
+    .todo-list-header{
+      text-align: center;
+      margin: 10px;
+      color: rgb(255, 196, 0) ;
+      font-size: 4vw;
+    }
+    textarea{
+      background-color: #161B22;
+      border: 2px solid grey;
+      color: rgb(177, 175, 175);
+      outline: none;
+      width: 80vw;
+    }
+    textarea::placeholder{
+      color: rgb(192, 192, 192);
+    }
+    form div{
+      display: block;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px;
+    }
+    form input{
+      height: 50px;
+      background: none;
+      color: grey;
+      border: 2px solid #73777c;
+      outline: none;
+      width: 60vw;
+    }
+    form input::placeholder{
+      color: rgb(192, 192, 192);
+      
+    }
+    form button{
+      height: 35px;
+      width: 100px;
+      background: none;
+      font-size: 15px;
+      color: #ffc400;
+      border: 2px solid #ffc400;
+      border-top-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      padding-bottom: 5px;
+      font-weight: 500;
+      margin-top: 5px;
+      margin-left: 10px;
+    }
+    form button:hover{
+      background: #ffc400;
+      color: #161B22;
+    }
+    .page{
+      margin: 20px 0px;
+    }
+    .page h3 {
+      color: rgb(255, 196, 0);
+      font-size: 22px;
+      display: block;
+      margin-left: 10px;
+     
+    }
+    .page button{
+      display: block;
+      background: none;
+      font-size: 15px;
+      color: #ffc400;
+      border: none;
+      padding-bottom: 5px;
+      font-weight: 500;
+      margin-top: 5px;
+      opacity: .5;
+    }
+    .page button:hover{
+      color: #73777c;
+      opacity: 0.8;
+    }
+    .task-details{
+    display: flex;
+    height: fit-content;
+    align-items:center;
+    margin: 10px;
+    border: 1px solid #807f7c;
+    padding: 1vw;
+  }
+  .task-details h3{
+    color: #ffc400;
+  }
+  .task-details button , .task-details p{
+    margin-left: 10px;
+  }
+  .task-details p{
+    width: 70vw;
+    
+  }
+  .list{
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 70px;
+  }
+  #complete{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  #complete h3{
+    display: none;
+  }
+  #taskheader{
+    display:none;
+  }
+  </style>
+</head>
+<body>
+  <div class="parent">
+    <div class="navbar">
+      <div class="logo">
+        <h1>
+          Task X
+        </h1>
+      </div>
+
+      <div class="menu" style="display: none;">
+        <ul>
+          <li>Sign up</li>
+          <li>Sign in</li>
+          <li>Create a to do list</li>
+          <li id="logout" style="display: none;">Log out</li>
+          <li id="notifications">Notifications</li>
+        </ul>
+      </div>
+      <div id="bars">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <div class="barsList" style="display: none;">
+        <ul>
+          <li>Sign up</li>
+          <li>Sign in</li>
+          <li>Create a to do list</li>
+          <li id="logout" style="display: none;">Log out</li>
+          <li id="notifications">Notifications</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="main-content">
+    
+        <div class="todo-list">
+            <div class="todo-list-header">
+              <h3>
+                To Do List
+              </h3>
+            </div>
+            <div id="text-field-div">
+              <form action="">
+              <div>
+                <textarea name="" placeholder=" Enter the task here..." id="text-field" cols="60" rows="6"></textarea> <br>
+
+                <input id="date" type="text" placeholder="Due date:"><br>
+              </div>
+                <button type="button" id="add-task">Add Task</button>
+              </form>
+            </div>
+            <div class="page">
+            <h3> Task List</h3>
+              <ul class="list">
+                  
+              </ul>
+                <h3>Completed Tasks</h3>
+              <ul id="complete">
+                    
+              </ul>
+      </div> 
+        </div>
+    </div>
+    
+  </div>
+  
+  
+  <script>
+    const text = document.querySelector('textarea');
+    const button = document.getElementById('add-task');
+    const list = document.querySelector('.list');
+    const date = document.getElementById('date');
+    const items = document.getElementsByClassName("task-details")
+    var taskNumber = 1;
+    const add_task = _ => {
+    
+      if(text.value === ''){
+        alert("please enter task before submitting")
+      } else{
+        const taskitem = document.createElement('li');
+      const task = document.createElement('div');
+      const tasktext = document.createElement('div');
+        task.innerHTML = `
+        <i class="far fa-calendar"></>
+      <h3 id="taskheader"> Task <span class="task-num"> ${taskNumber}: <span> </h3> `
+        
+     tasktext.innerHTML =` <p id="id-${taskNumber}" onclick="pushTask(this.id)"> ${text.value} </p>
+       
+          <p> Due: ${date.value} </p>
+      <button onclick="deleteTask(this.id)" id="id-${taskNumber}" class="delete" type="button">Delete</button>
+      `;
+      task.appendChild(tasktext)
+      taskitem.appendChild(task);
+      list.appendChild(taskitem);
+      task.classList.add('task-details');
+      task.setAttribute("id",`id-${taskNumber}`)
+      text.value = '';
+      date.value= ``;
+      taskNumber++
+      }
+  
+    }
+    button.addEventListener('click', add_task);
+
+// using the paragraph id passed as parameter onclick to push and delete tasks
+    const pushTask = (para_id) => {
+     const taskpush = document.querySelector(`div#${para_id}`)
+     const complete = document.querySelector("#complete")
+      var completed = taskpush.innerHTML
+      const completedItem = document.createElement('li')
+      completedItem.innerHTML = `<del><div id="${para_id}">${completed}</div></del>`;
+      complete.appendChild(completedItem)
+      taskpush.remove()
+      const btn = document.querySelector(`button#${para_id}`)
+      const para_text = document.querySelector(`p#${para_id}`)
+      para_text.setAttribute(`onclick`,``)
+   
+      btn.style.display = "none"
+    }
+  
+    const deleteTask = (para_id) => {
+      //function to delete task
+     const taskdelete = document.querySelector(`div#${para_id}`)
+     taskdelete.parentElement.remove()
+     
+    }
+   
+    
+    
+  </script>
+</body>
+</html>
